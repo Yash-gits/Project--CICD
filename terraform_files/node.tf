@@ -74,8 +74,8 @@ resource "aws_security_group" "my_security_group2" {
 # STEP2: CREATE A K8S EC2 INSTANCE USING EXISTING PEM KEY
 # Note: i. First create a pem-key manually from the AWS console
 #      ii. Copy it in the same directory as your terraform code
-resource "aws_instance" "my_ec2_instance2" {
-  ami                    = "ami-0cf10cdf9fcd62d37"
+resource "aws_instance" "my_ubuntu_instance2" {
+  ami                    = "ami-02b8269d5e85954ef"
   instance_type          = "t2.medium" # K8s requires min 2CPU & 4G RAM
   vpc_security_group_ids = [aws_security_group.my_security_group2.id]
   key_name               = "My_Key" # paste your key-name here, do not use extension '.pem'
@@ -95,8 +95,8 @@ resource "aws_instance" "my_ec2_instance2" {
     # ESTABLISHING SSH CONNECTION WITH EC2
     connection {
       type        = "ssh"
-      private_key = file("./My_Key.pem") # replace with your key-name 
-      user        = "ec2-user"
+      private_key = file("./invalidUSER.pem") # replace with your key-name 
+      user        = "ubuntu"
       host        = self.public_ip
     }
 
@@ -140,10 +140,11 @@ resource "aws_instance" "my_ec2_instance2" {
 
 # STEP3: OUTPUT PUBLIC IP OF EC2 INSTANCE
 output "NODE_SERVER_PUBLIC_IP" {
-  value = aws_instance.my_ec2_instance2.public_ip
+  value = aws_instance.my_ubuntu_instance2.public_ip
 }
 
 # STEP4: OUTPUT PRIVATE IP OF EC2 INSTANCE
 output "NODE_SERVER_PRIVATE_IP" {
-  value = aws_instance.my_ec2_instance2.private_ip
+  value = aws_instance.my_ubuntu_instance2.private_ip
 }
+
