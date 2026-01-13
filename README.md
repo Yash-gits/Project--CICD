@@ -18,7 +18,7 @@ This repository contains the following components:
     b. 'Node-Server' will have Docker, Kubeadm & Kubernetes packages
 
 #### 2.  Establish passwordless connection between 'Master-Server' & 'Node-Server'
-     ### Commands to run in 'Node-Server
+     ### Commands to run in 'Node-Server'
      sudo su -
      passwd ubuntu                         # (set password)
      vi /etc/ssh/sshd_config                 # (Allow 'PermitRootLogin yes' & allow 'PasswordAuthentication yes')
@@ -26,7 +26,7 @@ This repository contains the following components:
 
      <Commands to run in 'Master-Server'>
      ssh-keygen                              # (this will generate ssh key, press enter when prompted)
-     ssh-copy-id ubuntu@<Node_Private_IP>  # (enter 'yes' when prompted & enter the Node's ec2-user password when prompted)
+     ssh-copy-id ubuntu@<Node_Private_IP>  # (enter 'yes' when prompted & enter the Node's ubuntu password when prompted)
 
 #### 3.  Access Jenkins portal & add credentials in Jenkins portal as below:
      (Manage Jenkins --> Credentials --> System --> Global credentials)
