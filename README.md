@@ -32,6 +32,46 @@ This repository contains the following components:
 
      ssh-copy-id ubuntu@<Node_Private_IP>  # (enter 'yes' when prompted & enter the Node's ubuntu password when prompted)
 
+
+
+
+    #!/bin/bash
+set -e
+
+echo "===== Update OS ====="
+sudo apt update
+
+echo "===== Install Docker (official) ====="
+sudo apt install -y ca-certificates curl gnupg
+
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo tee /etc/apt/keyrings/docker.asc > /dev/null
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] \
+https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+sudo apt update
+sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+sudo systemctl start docker
+sudo systemctl enable docker
+sudo usermod -aG docker ubuntu
+
+echo "===== Install kubectl ====="
+curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
+sudo install kubectl /usr/local/bin/kubectl
+rm kubectl
+
+echo "===== Install Minikube ====="
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+sudo install minikube-linux-amd64 /usr/local/bin/minikube
+rm minikube-linux-amd64
+
+
+
+
 #### 3.  Access Jenkins portal & add credentials in Jenkins portal as below:
      (Manage Jenkins --> Credentials --> System --> Global credentials)
 
