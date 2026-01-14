@@ -32,8 +32,8 @@ This repository contains the following components:
 
      ssh-copy-id ubuntu@<Node_Private_IP>  # (enter 'yes' when prompted & enter the Node's ubuntu password when prompted)
 
-# Update OS
-    sudo apt update && \
+
+#### . Install Docker, kubectl & Minikube on Ubuntu 
 
 # Install prerequisites
     sudo apt install -y ca-certificates curl gnupg && \
@@ -78,47 +78,6 @@ This repository contains the following components:
     kubectl get nodes && \
     kubectl get pods -A
     
-#### 1. Install Docker, kubectl & Minikube on Ubuntu (Fresh Server)
-
-# Commands to run on the Server
-
-sudo apt update
-
-sudo apt install -y ca-certificates curl gnupg
-
-sudo install -m 0755 -d /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo tee /etc/apt/keyrings/docker.asc
-sudo chmod a+r /etc/apt/keyrings/docker.asc
-
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] \
-https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo \"$VERSION_CODENAME\") stable" | \
-sudo tee /etc/apt/sources.list.d/docker.list
-
-sudo apt update
-sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
-sudo systemctl start docker
-sudo systemctl enable docker
-sudo usermod -aG docker ubuntu
-newgrp docker
-
-docker run hello-world
-
-curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
-sudo install kubectl /usr/local/bin/kubectl
-rm kubectl
-
-curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-sudo install minikube-linux-amd64 /usr/local/bin/minikube
-rm minikube-linux-amd64
-
-minikube start --driver=docker
-
-kubectl get nodes
-kubectl get pods -A
-
-
-
 
 
 
