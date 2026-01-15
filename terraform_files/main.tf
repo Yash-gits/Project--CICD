@@ -101,9 +101,9 @@ resource "aws_instance" "my_ubuntu_instance1" {
       "sudo usermod -aG docker jenkins",
       "sudo chmod 666 /var/run/docker.sock",
 
-      # Trivy
-      "wget https://github.com/aquasecurity/trivy/releases/download/v0.18.3/trivy_0.18.3_Linux-64bit.deb",
-      "sudo dpkg -i trivy_0.18.3_Linux-64bit.deb",
+       Trivy
+      "curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sudo sh -s -- -b /usr/local/bin",
+      "trivy --version",
 
       # Ansible
       "sudo apt install -y software-properties-common",
@@ -128,3 +128,4 @@ output "MASTER_SERVER_PUBLIC_IP" {
 output "MASTER_SERVER_PRIVATE_IP" {
   value = aws_instance.my_ubuntu_instance1.private_ip
 }
+
